@@ -20,7 +20,7 @@ define
 		     var x2js = new X2JS();
 		     var jsonObj = x2js.xml2json(data)
 		     var booksHtml = booksTmpl(jsonObj);
-		     $("#books").html(booksHtml);
+		     $("#main").html(booksHtml);
 		 }
 		 books.fetch(options, callback);
 	     });  

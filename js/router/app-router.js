@@ -4,25 +4,17 @@ define(['backbone'], function(Backbone){
             Backbone.history.start();
         },
         routes: {
-            'fr': 'fr',
-            'en': 'en'
+            'book/:id': 'book',
+	    'any': 'any'
         },
-        fr: function( ){
-            var locale = localStorage.getItem('locale');
-            if(locale != 'fr-fr') {
-                localStorage.setItem('locale', 'fr-fr'); 
-                // i18n plugin require page reload !
-                location.reload();
-            }
-        },
-        en: function( ){
-            var locale = localStorage.getItem('locale');
-            if(locale != 'en-us') {
-                localStorage.setItem('locale', 'en-us');
-                // i18n plugin require page reload !
-                location.reload();
-            }
-        }
+
+	book : function(id) {
+	    console.log(id);
+	},
+       
+	any : function() {
+	    console.log("xxx");
+	}
     });
     
     return AppRouter;
