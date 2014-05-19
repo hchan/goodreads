@@ -1,7 +1,7 @@
 var App = {
     getURL : function(relativeURL) {
 	jQuery.ajaxSetup({ cache: true });
-	return "http://www.corsproxy.com/www.goodreads.com" + relativeURL + "&format=json&key=kBalTLaEbuAf3GWqfN3nw";
+	return "http://www.corsproxy.com/www.goodreads.com" + relativeURL + "&format=xml&key=kBalTLaEbuAf3GWqfN3nw";
     } 
     
 		

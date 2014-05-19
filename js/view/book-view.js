@@ -10,9 +10,23 @@ define
              $("#main").html(bookTmpl());
 	     var bookModel = new BookClass();
 	     var options = {};
-	     console.log(this.options);
+
 	     options.id = this.options.id;
-	     bookModel.fetch(options);
+	     var callback = function(data) {
+		 var x2js = new X2JS();
+		 var jsonObj = x2js.xml2json(data)
+		 //	     var booksHtml = booksTmpl(jsonObj);
+		 // this is a composite view, but instead of rendering "#book" with a template,
+		 // let's do it the simple way
+		 console.log(jsonObj.GoodreadsResponse.book);
+		 $("#book").html(jsonObj.GoodreadsResponse.book.title.toString());
+
+		 $("#reviews").html(jsonObj.GoodreadsResponse.book.reviews_widget.toString());
+		 
+
+
+	     }
+	     bookModel.fetch(options, callback);
              
          },
 

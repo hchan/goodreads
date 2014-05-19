@@ -2,7 +2,7 @@
 {{#each GoodreadsResponse.search.results.work}}
   <li>
   <p>
-    <a href="#book/{{this.id.__text}}">{{this.best_book.title}}</a>
+    <a href="#book/{{this.best_book.id}}">{{this.best_book.title}}</a>
   </p>
   <p>
    by {{this.best_book.author.name}}

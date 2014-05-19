@@ -14,7 +14,7 @@ define
 	    $.ajax({
 		url: url,
 		success: callback,
-		dataType: 'json'
+		dataType: 'xml'
 	    });
 	
 	}
