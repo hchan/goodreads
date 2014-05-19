@@ -1,6 +1,8 @@
 define
-(['jquery', 'underscore', 'backbone', 'resthub', 'hbs!template/app', 'collection/books'],
- function($, _, Backbone, Resthub, appTmpl, booksClass){
+(['jquery', 'underscore', 'backbone', 'handlebars-orig', 'resthub', 'hbs!template/app', 
+  'hbs!template/books',
+'collection/books'],
+ function($, _, Backbone, Handlebars, Resthub, appTmpl, booksTmpl, booksClass){
      var AppView = Resthub.View.extend
      ({
 	                
@@ -14,9 +16,16 @@ define
 		 console.log("YO");
 		 var books = new booksClass();
 		 var options = {};
-		 options.q = "abc";
-		 var callback = function() {
-		     console.log("DONE");
+		 options.q = $("#search").val();
+		 var callback = function(data) {
+		     var compiledBooksTmpl = Handlebars.compile(booksTmpl());
+		     console.log(data);
+
+		     var x2js = new X2JS();
+var jsonObj = 		     x2js.xml2json(data)
+		     console.log(jsonObj);
+		     //console.log(compiledBooksTmpl(jsonObj));
+		     
 		 }
 		 books.fetch(options, callback);
 	     });  

@@ -77,10 +77,11 @@ require.config({
         moment: 'lib/moment',
         template: '../template',
 		json2: 'lib/json2',
-        console: 'lib/resthub/console'
+        console: 'lib/resthub/console',
+	xml2json : 'lib/xml2json'
     },
     locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function
-require(['console', 'app']);
+require(['xml2json', 'app']);
