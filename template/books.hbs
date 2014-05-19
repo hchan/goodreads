@@ -1,6 +1,13 @@
-<p>
-books1
-{{title}}
-books2
-books3
-</p>
+<span>
+{{#each GoodreadsResponse.search.results.work}}
+  <li>
+  <p>
+  {{this.id.__text}}
+  </p>
+  <p>
+   {{this.best_book.title}}
+  </p>
+  </li>
+  {{/each}}
+
+</span>
