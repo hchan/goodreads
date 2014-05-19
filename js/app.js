@@ -1,6 +1,6 @@
 var App = {
     getURL : function(relativeURL) {
-	return "http://www.cors.com/" + relativeURL;
+	return "http://www.corsproxy.com/www.goodreads.com" + relativeURL + "&format=json&key=kBalTLaEbuAf3GWqfN3nw";
     } 
     
 		

@@ -13,7 +13,12 @@ define
 	     $("#searchButton").click(function() {
 		 console.log("YO");
 		 var books = new booksClass();
-		 books.fetch();
+		 var options = {};
+		 options.q = "abc";
+		 var callback = function() {
+		     console.log("DONE");
+		 }
+		 books.fetch(options, callback);
 	     });  
              
          },
