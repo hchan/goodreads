@@ -1,12 +1,25 @@
-define(['underscore', 'backbone'], function(_, Backbone) {
-  return Backbone.Model.extend({
+define
+(['underscore', 'backbone'], function(_, Backbone) {
+    return Backbone.Model.extend({
+	
 
+	defaults: {
+	    content: 'empty book...',
+	    done: false
+	},
+	fetch : function (options, callback) {
 
-      defaults: {
-	  content: 'empty book...',
-	  done: false
-    }
-
-
-  });
-})
+	    var url = App.getURL("/book/show/" + options.id + "?noop=noop");
+	    console.log(url);
+	    $.ajax({
+		url: url,
+		success: callback,
+		dataType: 'json'
+	    });
+	
+	}
+    });
+});
+    
+	
+				

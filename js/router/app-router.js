@@ -1,20 +1,19 @@
-define(['backbone'], function(Backbone){
+define(['backbone', 'view/book-view'], function(Backbone, BookView){
     var AppRouter = Backbone.Router.extend({
         initialize: function() {
             Backbone.history.start();
         },
         routes: {
             'book/:id': 'book',
-	    'any': 'any'
+
         },
 
 	book : function(id) {
+	    new BookView({root: $("#app"), id:id});	   
 	    console.log(id);
 	},
        
-	any : function() {
-	    console.log("xxx");
-	}
+
     });
     
     return AppRouter;
