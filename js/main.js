@@ -78,10 +78,11 @@ require.config({
         template: '../template',
 		json2: 'lib/json2',
         console: 'lib/resthub/console',
-	xml2json : 'lib/xml2json'
+	xml2json : 'lib/xml2json',
+	oauth : 'lib/oauth-1.0a'
     },
     locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function
-require(['xml2json', 'app']);
+require(['xml2json', 'oauth', 'app']);

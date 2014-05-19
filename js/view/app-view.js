@@ -1,7 +1,8 @@
 define
 (['jquery', 'underscore', 'backbone', 'handlebars-orig', 'resthub', 'hbs!template/app', 
   'hbs!template/books',
-'collection/books'],
+  'collection/books'
+],
  function($, _, Backbone, Handlebars, Resthub, appTmpl, booksTmpl, booksClass){
      var AppView = Resthub.View.extend
      ({
@@ -23,8 +24,7 @@ define
 		     $("#main").html(booksHtml);
 		 }
 		 books.fetch(options, callback);
-	     });  
-             
+	     });      
          },
 
      });               
