@@ -5,29 +5,69 @@ define
      var retval = Resthub.View.extend
      ({
 	                
-         initialize: function() {             
+         initialize: function() {          
+	     jQuery.ajaxSetup({ cache: true });   
              $("#app").html(profileTmpl());
              
-	     // https://github.com/ddo/oauth-1.0a
-	     var oauth = OAuth({
-		 consumer: {
-		     public: App.key,
-		     secret: App.secret,
-		 }
+	    // https://github.com/bytespider/jsOAuth/
+	     var oauth, options;
+
+	     options = {
+		 enablePrivilege: true,
+		 consumerKey: App.key,
+		 consumerSecret: App.secret,
+		 
+		 requestTokenUrl : 'http://www.goodreads.com/oauth/request_token',
+		 authorizationUrl : "https://www.goodreads.com/oauth/authorize",
+		 accessTokenUrl : "http://www.goodreads.com/oauth/access_token"
+		 
+	     };
+	     
+	     oauth = OAuth(options);
+	     oauth.fetchRequestToken(function(data) { // uses requestTokenUrl
+		 console.log("NICE");
+		 
+		 window.open(data, '_blank'); // uses authorizationUrl
+		 $("#getProfile").click(function() {
+		     oauth.fetchAccessToken(function(data2) { // uses accessTokenUrl
+			 console.log(data2);
+			 var requestOptions = {
+			     method : "GET",
+			     url : "https://www.goodreads.com/api/auth_user",
+			 };
+ 
+			 oauth.request(requestOptions);
+			 
+			 
+		     });
+		 });
+	     })
+
+	     console.log("Nice");
+	     //https://github.com/amoshg/backbone-oauth-1.0a
+	     var oauth;
+	     oauth = new Backbone.OAuth({
+		 consumerKey : App.key,
+		 consumerSecret: App.secret,
+		 requestURL : 'http://www.goodreads.com/oauth/request_token',
+		 authURL : "https://www.goodreads.com/oauth/authorize",
+		 accessURL : "http://www.goodreads.com/oauth/access_token"
 	     });
+	     atoken = oauth.getRequestToken();
+	     console.log(atoken);
 
 	     
 	     var request_data = {
 		 url : 'http://www.goodreads.com/oauth/request_token',
 		 method: 'POST'
 	     };
-	     
+	     var headers = oauth.toHeader(oauth.authorize(request_data));
 	   	    
-	     jQuery.ajaxSetup({ cache: true });
+
 	     var ajaxObj = $.ajax({
 		 url: request_data.url,
 		 type: request_data.method,
-		 headers: oauth.toHeader(oauth.authorize(request_data))
+		 headers: headers
 	     }).done(function(data) {
 		 console.log(data);
 		
@@ -45,13 +85,14 @@ define
 //		 var headers = oauth.toHeader(oauth.authorize(request_data));
 //		 headers.Authorization += ", oauth_token=\"" + oauth_token + "\""
 //		 headers.Authorization += ", oauth_token_secret=\"" + oauth_token_secret + "\""
-
+		 
+		 window.open("https://www.goodreads.com/oauth/authorize?oauth_token=" + oauth_token, '_blank');
 
 		 var token = {
 		     "public" : oauth_token,
 		     "secret":  oauth_token_secret
 		 }
-		 
+		 /*
 		 $.ajax({
 		     url: 'https://www.goodreads.com/oauth/authorize?oauth_token=' + oauth_token,
 		     //url: 'https://www.goodreads.com/api/auth_user',
@@ -67,11 +108,29 @@ define
 		     
 		     
 		 });
-	    
+		 */
+		 $("#getProfile").click(function() {
+
+		     console.log(oauth_token);
+		     token = {
+			 public : oauth_token
+		     }
+		     headers = oauth.toHeader(oauth.authorize(request_data, token));
+		     console.log(headers);
+		     $.ajax({
+			 url: "http://www.goodreads.com/oauth/access_token",
+			 type: "GET",
+			 headers: headers
+		     }).done(function (data) {
+			 console.log(data);
+		     });
+		 });
+
+
+
 	     });
 
-
-
+	   
 
 	 }
      });  

@@ -33,6 +33,14 @@ require.config({
             ],
             exports: 'Backbone.Paginator'
         },
+	'backbone-oauth' : {
+	    deps: [
+		'jquery',
+		'sha1',
+		'backbone'
+	    ],
+	    exports :'Backbone.OAuth'
+	},
         'bootstrap': {
             deps: [
                 'jquery'
@@ -43,6 +51,16 @@ require.config({
                 'backbone'
             ]
         },
+	'jsOAuth' : {
+	    deps: [
+                'backbone'
+            ]
+	},
+	'app' : {
+	    deps : [
+		'jsOAuth'
+	    ]
+	},
         'keymaster': {
             exports: 'key'
         },
@@ -79,10 +97,12 @@ require.config({
 		json2: 'lib/json2',
         console: 'lib/resthub/console',
 	xml2json : 'lib/xml2json',
-	oauth : 'lib/oauth-1.0a'
+	'backbone-oauth' : 'lib/backbone-oauth',
+	'sha1' : 'lib/sha1',
+	jsOAuth : 'lib/jsOAuth'
     },
     locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function
-require(['xml2json', 'oauth', 'app']);
+require(['xml2json', 'jsOAuth', 'app']);
