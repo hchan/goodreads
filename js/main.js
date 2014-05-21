@@ -101,7 +101,6 @@ require.config({
 	'sha1' : 'lib/sha1',
 	jsOAuth : 'lib/jsOAuth'
     },
-    locale: localStorage.getItem('locale') || 'en-us'
 });
 
 // Load our app module and pass it to our definition function

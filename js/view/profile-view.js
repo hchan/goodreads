@@ -26,7 +26,7 @@ define
 	     oauth = OAuth(options);
 	     oauth.fetchRequestToken(function(data) { // uses requestTokenUrl
 		 console.log("NICE");
-		 
+		 console.log(data);
 		 window.open(data, '_blank'); // uses authorizationUrl
 		 
 	     });

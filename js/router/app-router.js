@@ -1,11 +1,12 @@
-define(['backbone', 'view/book-view', 'view/profile-view'], function(Backbone, BookView, ProfileView){
+define(['backbone', 'view/book-view', 'view/profile-view', 'view/login-view'], function(Backbone, BookView, ProfileView, LoginView){
     var AppRouter = Backbone.Router.extend({
         initialize: function() {
             Backbone.history.start();
         },
         routes: {
             'book/:id': 'book',
-	    'profile': 'profile'
+	    'profile': 'profile',
+	    'login': 'login'
         },
 
 	book : function(id) {
@@ -15,6 +16,10 @@ define(['backbone', 'view/book-view', 'view/profile-view'], function(Backbone, B
 
 	profile : function() {
 	    new ProfileView({root: $("#app")});
+	},
+
+	login : function() {
+	    new LoginView({root: $("#app")});
 	}
        
 
