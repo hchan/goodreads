@@ -9,9 +9,15 @@ define
          initialize: function() {             
              $("#main").html(bookTmpl());
 			 
-			 if (App.isLoggedIn()) {
+			if (App.isLoggedIn()) {
 				$("#createReviewDiv").show();
 			}
+			
+			var viewThis = this;
+			var createReviewFunc = function () {
+				viewThis.createReview(viewThis);
+			};
+			$("#createReview").click(createReviewFunc);
 			 var bookModel = new BookClass();
 			 var options = {};
 
@@ -32,7 +38,31 @@ define
 			 }
 			 bookModel.fetch(options, callback);
 				 
-			 },
+		},
+		
+		createReview : function(viewThis) {
+			console.log(viewThis);
+			console.log($("#reviewTextarea").val());
+			var oauth = App.createOAuth();
+				var requestOptions = {
+					method : "POST",
+					url : "https://www.goodreads.com/review.xml",
+					data : {
+						book_id : viewThis.options.id,
+						"review[review]" : $("#reviewTextarea").val()
+					},
+					success : function(data) {
+						 var x2js = new X2JS();
+						 var jsonObj = x2js.xml2json($.parseXML(data.text));
+						 console.log(jsonObj);
+						 var profileInfoHtml = profileInfoTmpl(jsonObj);
+
+						 $("#app").html(profileInfoHtml);			     
+					}
+				};
+			 
+			oauth.request(requestOptions);
+		}
 
      });               
      return retval;
