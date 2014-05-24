@@ -1,60 +1,66 @@
 define
-(['jquery', 'underscore', 'backbone', 'resthub', 'hbs!template/profile', 'hbs!template/profileInfo'
+(['jquery', 'underscore', 'backbone', 'resthub', 'hbs!template/profileInfo'
  ],
- function($, _, Backbone, Resthub, profileTmpl, profileInfoTmpl){
+ function($, _, Backbone, Resthub, profileInfoTmpl){
      var retval = Resthub.View.extend
      ({
 	 
-         initialize: function() {          
-	     jQuery.ajaxSetup({ cache: true });   
-             $("#app").html(profileTmpl());
-             
-	    // https://github.com/bytespider/jsOAuth/
-	     var oauth, options;
-	     
-	     options = {
-		 enablePrivilege: true,
-		 consumerKey: App.key,
-		 consumerSecret: App.secret,
-
-		 requestTokenUrl : 'http://www.goodreads.com/oauth/request_token',
-		 authorizationUrl : "https://www.goodreads.com/oauth/authorize",
-		 accessTokenUrl : "http://www.goodreads.com/oauth/access_token"
-
-	     };
-	     
-	     oauth = OAuth(options);
-	     oauth.fetchRequestToken(function(data) { // uses requestTokenUrl
-		 console.log("NICE");
-		 console.log(data);
-		 window.open(data, '_blank'); // uses authorizationUrl
-		 
-	     });
-
-	     $("#getProfile").click(function() {
-		 console.log(oauth.getAccessToken());
-		 oauth.fetchAccessToken(function(data2) { // uses accessTokenUrl
-		     console.log(data2);
-		     var requestOptions = {
-			 method : "GET",
-			 url : "https://www.goodreads.com/api/auth_user", // profile information
-			 success : function(data) {
-			     var x2js = new X2JS();
-			     console.log(data.text);
-			     var jsonObj = x2js.xml2json($.parseXML(data.text));
-			     console.log(jsonObj);
-			     var profileInfoHtml = profileInfoTmpl(jsonObj);
-
-			     $("#profileInfo").html(profileInfoHtml);			     
-			 }
-		     };
-			 
-		     oauth.request(requestOptions);
+         initialize: function() {    
+			this.doProfileWithBroswerOAuth();
+			
+			
+			
 			 
 			 
-		 });
-	     });
-	 }
+		},
+		
+		
+		doProfileWithJavaProxy : function() {
+			$.ajax({
+				type: "GET",
+				url: "http://localhost:8080/rest/goodreadsproxy" + "/www.goodreads.com/api/auth_user",		
+				
+				//xhrFields: {
+				//	  withCredentials: true
+				 //  }				
+				}).done(function(data) {
+			
+						if (data.indexOf("REDIRECT: ") != -1) {
+							window.location.href = data.replace("REDIRECT: ", "");
+						} else {
+							var x2js = new X2JS();
+							var jsonObj = x2js.xml2json($.parseXML(data));
+							console.log(jsonObj);
+							var profileInfoHtml = profileInfoTmpl(jsonObj);
+
+							$("#app").html(profileInfoHtml);	
+						}
+			});
+		},
+		
+		doProfileWithBroswerOAuth : function() {
+			var oauth = App.createOAuth();
+			console.log(oauth.getAccessToken());
+
+	 
+			//oauth.fetchAccessToken(function(data) { // uses accessTokenUrl
+				//console.log(data);
+				var requestOptions = {
+					method : "GET",
+					url : "http://www.goodreads.com/api/auth_user?format=xml&key=kBalTLaEbuAf3GWqfN3nw&noop=noop",
+					//App.getURL("/api/auth_user?noop=noop"), // profile information
+					success : function(data) {
+						 var x2js = new X2JS();
+						 var jsonObj = x2js.xml2json($.parseXML(data.text));
+						 console.log(jsonObj);
+						 var profileInfoHtml = profileInfoTmpl(jsonObj);
+
+						 $("#app").html(profileInfoHtml);			     
+					}
+				};
+			 
+				oauth.request(requestOptions);
+		}
 	     
 	    
      });  
