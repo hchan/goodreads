@@ -49,14 +49,19 @@ define
 			var thisView = this;
 			this.updatePollingText(thisView);
              
+			window.addEventListener("message", receiveMessage, false);
+
+			function receiveMessage(event)
+			{
+			  console.log("Wow, cross communication works");
+			}
 			
-			
-			$('#authorizationFrame').load(function(data){
-				console.log('frame has (re)loaded');
-				console.log(data.target.contentWindow);
+			//$('#authorizationFrame').load(function(data){
+			//	console.log('frame has (re)loaded');
+			//	console.log(data.target.contentWindow);
 				
 				//thisView.authorizationFrameSrc = data.target.contentWindow.location + "";
-			});
+			//});
 
  
 			 
