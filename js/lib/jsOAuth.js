@@ -273,7 +273,10 @@ exports.OAuth = (function (global) {
                 accessTokenKey: options.accessTokenKey || empty,
                 accessTokenSecret: options.accessTokenSecret || empty,
                 verifier: empty,
-                signatureMethod: options.signatureMethod || 'HMAC-SHA1'
+                signatureMethod: options.signatureMethod || 'HMAC-SHA1',
+				
+				// hack by HC
+				urlToSignForFunc : options.urlToSignForFunc
             };
 
             this.realm = options.realm || empty;
@@ -430,7 +433,10 @@ exports.OAuth = (function (global) {
                     }
                 }
 
-                urlString = url.scheme + '://' + url.host + url.path;
+                urlString = url.scheme + '://' + url.host + url.path;				
+				// hack by HC
+				urlString = oauth.urlToSignForFunc(urlString);				
+				console.log("urlString: " + urlString);
                 signatureString = toSignatureBaseString(method, urlString, headerParams, signatureData);
 
                 signature = OAuth.signatureMethod[signatureMethod](oauth.consumerSecret, oauth.accessTokenSecret, signatureString);
@@ -442,9 +448,9 @@ exports.OAuth = (function (global) {
                     headerParams['realm'] = this.realm;
                 }
 
-                if (oauth.proxyUrl) {
-                    url = URI(oauth.proxyUrl + url.path);
-                }
+                //if (oauth.proxyUrl) {
+                //    url = URI(oauth.proxyUrl + url.path);
+                //}
 
                 if(appendQueryString || method == 'GET') {
                     url.query.setQueryParams(data);

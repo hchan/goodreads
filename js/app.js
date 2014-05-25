@@ -17,15 +17,22 @@ var App = {
 			 enablePrivilege: true,
 			 consumerKey: App.key,
 			 consumerSecret: App.secret,
-
+/*
 			 requestTokenUrl : 'http://www.goodreads.com/oauth/request_token',
 			 authorizationUrl : "http://www.goodreads.com/oauth/authorize",
-			 accessTokenUrl : "http://www.goodreads.com/oauth/access_token"
-/*
-			 requestTokenUrl : 'http://www.corsproxy.com/www.goodreads.com/oauth/request_token',
-			 authorizationUrl : "http://www.corsproxy.com/www.goodreads.com/oauth/authorize",
-			 accessTokenUrl : "http://www.corsproxy.com/www.goodreads.com/oauth/access_token"
+			 accessTokenUrl : "http://www.goodreads.com/oauth/access_token",
 */
+			 requestTokenUrl : 'http://www.corsproxy.com/www.goodreads.com/oauth/request_token',
+			 authorizationUrl : "http://www.goodreads.com/oauth/authorize", // note this is a OutOfBand request - hence no CORS - in fact, CORS will break this
+			 accessTokenUrl : "http://www.corsproxy.com/www.goodreads.com/oauth/access_token",
+			 
+			 /*
+			 * this urlToSignForFunc is a Henry Chan feature
+			 * Basically, because we are using a CORS proxy, our URL Signature will contain the CORS Proxy URL
+			 * This is bad ... so this function will create the OAuth signature STRIPPING OUT the CORS Proxy URL
+			 */
+			 urlToSignForFunc : App.urlToSignForFunc
+
 	     };
 		var retval = OAuth(options);
 		//if (localStorage["goodreads"] != null) {
@@ -37,6 +44,10 @@ var App = {
 	
 	isLoggedIn : function() {
 		return (localStorage["goodreads.key"] != null);
+	},
+	
+	urlToSignForFunc : function(url) {
+		return url.replace("www.corsproxy.com/", "");
 	}
 		
 };
