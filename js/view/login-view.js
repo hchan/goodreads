@@ -4,8 +4,9 @@ define
  function($, _, Backbone, Resthub, loginTmpl){
      var retval = Resthub.View.extend
      ({
-		authorizationFrameSrc : "",
 		
+		waitInterval : null,
+		postMessageCount : 0,
         initialize: function() {          
 			
              this.loginWithBrowserOAuth();
@@ -18,60 +19,64 @@ define
 			window.location.href='http://localhost:8080/rest/goodreads/authenticate?callbackURL=' + callbackURL;
 		},
 		
-		updatePollingText : function(thisView) {
-			var pollingText = $("#pollingText").html();
+		updateWaitingText : function(thisView) {
+			var waitingText = $("#waitingText").html();
 			var loopCount = 0;
-			var loadingInterval = self.setInterval(function() {
-				var animatedText = pollingText;
-				var indexOfAnimation = loopCount % pollingText.length;
-				var preText = pollingText.substring(0, indexOfAnimation);
-				var postText = pollingText.substring(indexOfAnimation+1);
-				$("#pollingText").html(preText + "." + postText);
+			thisView.waitInterval = self.setInterval(function() {
+				var animatedText = waitingText;
+				var indexOfAnimation = loopCount % waitingText.length;
+				var preText = waitingText.substring(0, indexOfAnimation);
+				var postText = waitingText.substring(indexOfAnimation+1);
+				$("#waitingText").html(preText + "." + postText);
 				loopCount++;
-				//console.log($("#authorizationFrame").attr('src'));
-				//var frameSrc = $("#authorizationFrame").attr('src');
-				//if (frameSrc == null) {
-				//	frameSrc = "";
-				//} else {
-				//	console.log(frameSrc);
-				//}
-				console.log(thisView.authorizationFrameSrc);
-				if (thisView.authorizationFrameSrc.indexOf("http://en.wikipedia.org/wiki/OAuth") != -1) {
-					console.log("break loop");
-					clearInterval(loadingInterval);
-				}
+				
 			}, 500);
 			
 		},
 		
+		doAuthorizeOK : function(thisView, oauth) {
+			clearInterval(thisView.waitInterval);
+			var countDown = 10;
+			
+			var accessToken = oauth.getAccessToken();
+			console.log(accessToken);
+			App.saveToken(accessToken[0], accessToken[1]);
+			thisView.waitInterval = self.setInterval(function() {
+				$("#waitingText").html("Authentication OK.  Redirecting back home in " + countDown + "s");
+				countDown--;
+				if (countDown == -1) {
+					clearInterval(thisView.waitInterval);
+					window.location.href="#home";
+				}
+			}, 1000);
+		},
+		
+		
 		loginWithBrowserOAuth : function() {
 			$("#app").html(loginTmpl());
+			$(".callbackURL").html(App.oauthCallbackURL);
 			var thisView = this;
-			this.updatePollingText(thisView);
+			// https://github.com/bytespider/jsOAuth/
+			 var oauth;
+			 oauth = App.createOAuth();
+			 
+			 
+			this.updateWaitingText(thisView);
              
 			window.addEventListener("message", receiveMessage, false);
 
 			function receiveMessage(event)
 			{
-			console.log(event);
-				console.log(event.orgin);
-			  console.log("Wow, cross communication works");
+				//console.log(event);
+				//console.log(event.orgin);
+				//console.log("Wow, cross communication works");
+				thisView.postMessageCount++;
+				if (thisView.postMessageCount == 3) {
+					thisView.doAuthorizeOK(thisView, oauth);					
+				}
 			}
-			
-			//$('#authorizationFrame').load(function(data){
-			//	console.log('frame has (re)loaded');
-			//	console.log(data.target.contentWindow);
-				
-				//thisView.authorizationFrameSrc = data.target.contentWindow.location + "";
-			//});
-
- 
 			 
-			// https://github.com/bytespider/jsOAuth/
-			 var oauth;
-			 // Goodreads OutOfBand Authorization
-			 //var goodreadsOOBauthorizationWindow = null;
-			 oauth = App.createOAuth();
+			
 			 oauth.fetchRequestToken(function(data) { // uses requestTokenUrl
 				
 				 console.log(data);

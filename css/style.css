@@ -147,7 +147,7 @@ body {
 	-webkit-transform:rotate(180deg);
 }
 
-#pollingText {
+#waitingText {
 	color: blue;
 	background-color : yellow
 }

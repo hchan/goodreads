@@ -1,6 +1,9 @@
 var App = {
     key : 'kBalTLaEbuAf3GWqfN3nw',
     secret: 'zP2xpCd5Vu8aGpNw67U3PoYZOUf1QvzFPcEB8Bt3Fj0',
+	
+	oauthCallbackURL : "http://hchan.github.io/goodreads/authorizeOK.html",
+	
     getURL : function(relativeURL) {
     	jQuery.ajaxSetup({ cache: true });
     	return "http://www.corsproxy.com/www.goodreads.com" + relativeURL + "&format=xml&key=" + App.key;
@@ -29,6 +32,8 @@ var App = {
 			 enablePrivilege: true,
 			 consumerKey: App.key,
 			 consumerSecret: App.secret,
+			 
+			
 /*
 			 requestTokenUrl : 'http://www.goodreads.com/oauth/request_token',
 			 authorizationUrl : "http://www.goodreads.com/oauth/authorize",

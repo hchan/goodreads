@@ -1,11 +1,11 @@
 <p>
 The frame below will ask for your OAuth permission to use the Goodreads WRITE API.
 If you are not already signed in to Goodreads, then please do so in the frame below.
-Afterwards, that frame will redirect you to http://en.wikipedia.org/wiki/OAuth
+Afterwards, that frame will redirect you to <span class="callbackURL"/>
 meaning that your token has been accepted.
-This top frame is currently polling the bottom frame to turn to : http://en.wikipedia.org/wiki/OAuth
+This top frame is currently waiting for the bottom frame to turn to : <span class="callbackURL"/>
 
-<div id="pollingText">Still polling...</div>
+<div id="waitingText">Still waiting...</div>
 </p>
 <hr/>
 <h2>Technical Mumble Smumble</h2>
@@ -15,9 +15,9 @@ Only after the authorization is complete will the fetchAccessToken API be availa
 After authorization is complete, this app will fetch the access token and store it in 
 <a href="http://diveintohtml5.info/storage.html">localStorage</a>
 
-I arbitrarily chose http://en.wikipedia.org/wiki/OAuth as the callback page(a setting in
-the Goodreads app settings).  If we had an intermediate server (well, besides CORSProxy), the callback will
-be this intermediate server and the action of the Done Button (fetchAccessToken) should be moved there.
+I arbitrarily chose <span class="callbackURL"/> as the callback page(a setting in
+the Goodreads app settings).  The callbackURL will do a javascript postMessage to let the
+parent know that it is loaded.
 </div>
 <hr/>
 <iframe id="authorizationFrame" style="width: 100%; height: 500px">
