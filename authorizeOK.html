@@ -1,5 +1,9 @@
 <script>
-$(document).ready(function() {
+
     window.parent.postMessage("I'm loaded", "*");
-});
+
 </script>
+<p>
+This is the authorization callback from Goodreads.<br/>
+Will attempt to post a message back to the parent frame to tell it that I'm loaded.
+</p>
