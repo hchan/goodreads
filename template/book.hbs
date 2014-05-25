@@ -3,14 +3,22 @@
 bookInfo
 </div>
 <hr/>
-<div id="myReviewDiv" style="display: none">
-My review:<br/>
-<div id="myReview"/>
+
+<div id="editReviewDiv" class="reviewAction" style="display: none">
+<textarea id="editReviewTextarea" rows="4" cols="50"/><br/>
+<input type="button" id="doEditReview" value="Edit Review"/>
+<input type="button" id="cancelEdit" value="Cancel Edit Review"/>
 </div>
 
-<div id="createReviewDiv" style="display: none">
+<div id="myReviewDiv" class="reviewAction" style="display: none">
+My review:<br/>
+<div id="myReview"/>
+<input type="button" id="editReview" value="Edit Review"/>
+</div>
+
+<div id="createReviewDiv" class="reviewAction" style="display: none">
 Write a review:<br/>
-<textarea id="reviewTextarea" rows="4" cols="50"/>
+<textarea id="reviewTextarea" rows="4" cols="50"/><br/>
 <input type="button" id="createReview" value="Create Review"/>
 </div>
 <div id="reviews">

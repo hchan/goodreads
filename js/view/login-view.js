@@ -40,6 +40,7 @@ define
 				var accessToken = oauth.getAccessToken();
 				console.log(accessToken);
 				App.saveToken(accessToken[0], accessToken[1]);
+				thisView.saveUserID(thisView, oauth);
 				var countDown = 10;
 				clearInterval(thisView.waitInterval);
 				thisView.waitInterval = self.setInterval(function() {
@@ -51,6 +52,20 @@ define
 					}
 				}, 1000);
 			});
+		},
+		
+		saveUserID : function(thisView, oauth) {
+			var profileRequestOptions = {
+				method : "GET",
+				url : "http://www.corsproxy.com/www.goodreads.com/api/auth_user",
+				success : function(data) {
+					var x2js = new X2JS();
+					var jsonObj = x2js.xml2json($.parseXML(data.text));
+					userID = jsonObj.GoodreadsResponse.user._id;
+					App.saveUserID(userID);
+				}
+			};
+			oauth.request(profileRequestOptions);
 		},
 		
 		

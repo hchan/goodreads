@@ -14,6 +14,14 @@ var App = {
 		localStorage["goodreads.secret"] = secret;
 	},
 	
+	saveUserID : function(userID) {
+		localStorage["goodreads.userID"] = userID;
+	},
+	
+	getUserID : function(userID) {
+		return localStorage["goodreads.userID"];
+	},
+	
 	getToken : function() {
 		var token = {};
 		token['key'] = localStorage["goodreads.key"];
@@ -24,6 +32,7 @@ var App = {
 	deleteToken : function() {
 		localStorage.removeItem("goodreads.key");
 		localStorage.removeItem("goodreads.secret");
+		localStorage.removeItem("goodreads.userID");
 	},
 	
 	createOAuth : function() {

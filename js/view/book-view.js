@@ -11,9 +11,20 @@ define
              $("#main").html(bookTmpl());
 			 
 			if (App.isLoggedIn()) {
-				this.getMyReview();
-				
+				this.getMyReview();				
 			}
+			
+			$("#editReview").click(function() {
+				$(".reviewAction").hide();
+				$("#editReviewDiv").show();
+			});
+			
+			$("#cancelEdit").click(function() {
+				thisView.initialize();
+			});
+			$("#doEditReview").click(function() {
+				thisView.doEditReview(viewThis);
+			});
 			
 			var viewThis = this;
 			var createReviewFunc = function () {
@@ -40,6 +51,10 @@ define
 			 }
 			 bookModel.fetch(options, callback);
 				 
+		},
+		
+		doEditReview : function(viewThis) {
+			console.log("inside doEditReview");
 		},
 		
 		createReview : function(viewThis) {
@@ -73,32 +88,23 @@ define
 			var getMyReviewOptions = {
 				method : "GET",
 				url : "http://www.corsproxy.com/www.goodreads.com/review/show_by_user_and_book.xml",
+				data : {
+					user_id : App.getUserID(),
+					book_id : thisView.options.id
+				},
 				success : function(data) {
 					 var x2js = new X2JS();
 					 var jsonObj = x2js.xml2json($.parseXML(data.text));
 					$("#myReviewDiv").show();
-					$("#myReview").html(jsonObj.GoodreadsResponse.review.body);				     
+					$("#myReview").html(jsonObj.GoodreadsResponse.review.body);		
+					
+					
 				},
 				failure : function(data) {
 					$("#createReviewDiv").show();
 				}
 			}
-			var profileRequestOptions = {
-				method : "GET",
-				url : "http://www.corsproxy.com/www.goodreads.com/api/auth_user",
-				success : function(data) {
-					var x2js = new X2JS();
-					var jsonObj = x2js.xml2json($.parseXML(data.text));
-					userID = jsonObj.GoodreadsResponse.user._id;
-					getMyReviewOptions.data = {};
-					getMyReviewOptions.data.user_id = userID;
-					getMyReviewOptions.data.book_id = thisView.options.id;
-					console.log(getMyReviewOptions);
-					oauth.request(getMyReviewOptions);
-				}
-			};
-			
-			oauth.request(profileRequestOptions);
+			oauth.request(getMyReviewOptions);
 		}
 
      });               
