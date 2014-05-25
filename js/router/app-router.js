@@ -1,5 +1,7 @@
-define(['backbone', 'view/book-view', 'view/profile-view', 'view/login-view', 'view/update-token', 'view/app-view'], 
-	function(Backbone, BookView, ProfileView, LoginView, UpdateTokenView, AppView){
+define(['backbone', 'view/book-view', 'view/profile-view', 'view/login-view', 'view/update-token', 
+'view/app-view',
+'view/logout-view'], 
+	function(Backbone, BookView, ProfileView, LoginView, UpdateTokenView, AppView, LogoutView){
     var AppRouter = Backbone.Router.extend({
         initialize: function() {
             Backbone.history.start();
@@ -9,7 +11,8 @@ define(['backbone', 'view/book-view', 'view/profile-view', 'view/login-view', 'v
 			'profile': 'profile',
 			'login': 'login',
 			'updateToken' : 'updateToken',
-			'home':'home'
+			'home':'home',
+			'logout':'logout'
         },
 
 		book : function(id) {
@@ -31,6 +34,10 @@ define(['backbone', 'view/book-view', 'view/profile-view', 'view/login-view', 'v
 		
 		home : function() {
 			new AppView({root: $("#app")});
+		},
+		
+		logout : function() {
+			new LogoutView({root: $("#app")});
 		}
 
     });

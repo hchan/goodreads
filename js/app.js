@@ -11,6 +11,18 @@ var App = {
 		localStorage["goodreads.secret"] = secret;
 	},
 	
+	getToken : function() {
+		var token = {};
+		token['key'] = localStorage["goodreads.key"];
+		token['secret'] = localStorage["goodreads.secret"];
+		return token;
+	},
+	
+	deleteToken : function() {
+		localStorage.removeItem("goodreads.key");
+		localStorage.removeItem("goodreads.secret");
+	},
+	
 	createOAuth : function() {
 		 jQuery.ajaxSetup({ cache: true });   
 		var options = {
