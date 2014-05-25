@@ -73,7 +73,10 @@ var App = {
 	},
 	
 	urlToSignForFunc : function(url) {
-		return url.replace("www.corsproxy.com/", "");
+		var retval = url;
+		retval = retval.replace("www.corsproxy.com/", "");
+		retval = retval.replace("cors-anywhere.herokuapp.com/", "");
+		return retval;
 	}
 		
 };
