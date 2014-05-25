@@ -17,10 +17,7 @@ define(['backbone', 'model/book'], function(Backbone, book){
 		success: callback,
 		dataType: 'xml'
 	    });
-
-//format=xml&key=kBalTLaEbuAf3GWqfN3nw&q=adventure
 	}
     
-	//url : 'http://www.corsproxy.com/www.goodreads.com/search.xml?key=kBalTLaEbuAf3GWqfN3nw&q=Warcraft'
     });
 });

@@ -58,8 +58,7 @@ define
 			//console.log(reviewID);
 			var requestOptions = {
 				method : "POST",
-				//url : "http://www.corsproxy.com/www.goodreads.com/review/" + reviewID + ".xml",
-				url : "http://cors-anywhere.herokuapp.com/www.goodreads.com/review/" + reviewID + ".xml",
+				url : App.getURL("/review/") + reviewID + ".xml",
 				//url : "http://www.goodreads.com/review/" + reviewID + ".xml",
 				data : {
 					id : reviewID,
@@ -85,8 +84,8 @@ define
 			var oauth = App.createOAuth();
 				var requestOptions = {
 					method : "POST",
-					//url : "http://www.corsproxy.com/www.goodreads.com/review.xml",
-					url : "http://www.goodreads.com/review.xml",
+					url : App.getURL("/review.xml"),
+					//url : "http://www.goodreads.com/review.xml",
 					data : {
 						book_id : viewThis.options.id,
 						"review[review]" : $("#reviewTextarea").val()
@@ -109,8 +108,8 @@ define
 			var oauth = App.createOAuth();
 			var getMyReviewOptions = {
 				method : "GET",
-				//url : "http://www.corsproxy.com/www.goodreads.com/review/show_by_user_and_book.xml",
-				url : "http://cors-anywhere.herokuapp.com/www.goodreads.com/review/show_by_user_and_book.xml",
+				
+				url : App.getURL("/review/show_by_user_and_book.xml"),
 				data : {
 					user_id : App.getUserID(),
 					book_id : thisView.options.id

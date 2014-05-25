@@ -51,9 +51,9 @@ var App = {
 			 authorizationUrl : "http://www.goodreads.com/oauth/authorize",
 			 accessTokenUrl : "http://www.goodreads.com/oauth/access_token",
 */
-			 requestTokenUrl : 'http://www.corsproxy.com/www.goodreads.com/oauth/request_token',
+			 requestTokenUrl : App.getURL("/oauth/request_token"),
 			 authorizationUrl : "http://www.goodreads.com/oauth/authorize", // note this is a OutOfBand request - hence no CORS - in fact, CORS will break this
-			 accessTokenUrl : "http://www.corsproxy.com/www.goodreads.com/oauth/access_token",
+			 accessTokenUrl : App.getURL("/oauth/access_token"),
 			 
 			 /*
 			 * this urlToSignForFunc is a Henry Chan feature

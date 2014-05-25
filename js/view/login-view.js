@@ -57,7 +57,7 @@ define
 		saveUserID : function(thisView, oauth) {
 			var profileRequestOptions = {
 				method : "GET",
-				url : "http://www.corsproxy.com/www.goodreads.com/api/auth_user",
+				url : App.getURL("/api/auth_user"),
 				success : function(data) {
 					var x2js = new X2JS();
 					var jsonObj = x2js.xml2json($.parseXML(data.text));
