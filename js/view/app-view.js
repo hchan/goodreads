@@ -1,9 +1,10 @@
 define
 (['jquery', 'underscore', 'backbone', 'handlebars-orig', 'resthub', 'hbs!template/app', 
   'hbs!template/books',
-  'collection/books'
+  'collection/books',
+  'hbs!template/loginMenu',
 ],
- function($, _, Backbone, Handlebars, Resthub, appTmpl, booksTmpl, booksClass){
+ function($, _, Backbone, Handlebars, Resthub, appTmpl, booksTmpl, booksClass, loginMenuTmpl){
      var AppView = Resthub.View.extend
      ({
 	                
@@ -13,7 +14,7 @@ define
 
 			this.render();
 			if (App.isLoggedIn()) {
-				$("#login").html("<a href='#profile'>View Profile</a>");
+				$("#login").html(loginMenuTmpl());
 			} else {
 				$("#login").html("<a href='#login'>Login</a>");
 			}
