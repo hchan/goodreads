@@ -6,11 +6,13 @@ define
      var retval = Resthub.View.extend
      ({
 	                
-         initialize: function() {             
+         initialize: function() {       
+			var thisView = this;
              $("#main").html(bookTmpl());
 			 
 			if (App.isLoggedIn()) {
-				$("#createReviewDiv").show();
+				this.getMyReview();
+				
 			}
 			
 			var viewThis = this;
@@ -46,7 +48,7 @@ define
 			var oauth = App.createOAuth();
 				var requestOptions = {
 					method : "POST",
-					url : "https://www.goodreads.com/review.xml",
+					url : "https://www.corsproxy.com/goodreads.com/review.xml",
 					data : {
 						book_id : viewThis.options.id,
 						"review[review]" : $("#reviewTextarea").val()
@@ -62,6 +64,41 @@ define
 				};
 			 
 			oauth.request(requestOptions);
+		},
+		
+		getMyReview : function() {
+			var thisView = this;
+			var oauth = App.createOAuth();
+			var userID = null;
+			var getMyReviewOptions = {
+				method : "GET",
+				url : "http://www.corsproxy.com/www.goodreads.com/review/show_by_user_and_book.xml",
+				success : function(data) {
+					 var x2js = new X2JS();
+					 var jsonObj = x2js.xml2json($.parseXML(data.text));
+					$("#myReviewDiv").show();
+					$("#myReview").html(jsonObj.GoodreadsResponse.review.body);				     
+				},
+				failure : function(data) {
+					$("#createReviewDiv").show();
+				}
+			}
+			var profileRequestOptions = {
+				method : "GET",
+				url : "http://www.corsproxy.com/www.goodreads.com/api/auth_user",
+				success : function(data) {
+					var x2js = new X2JS();
+					var jsonObj = x2js.xml2json($.parseXML(data.text));
+					userID = jsonObj.GoodreadsResponse.user._id;
+					getMyReviewOptions.data = {};
+					getMyReviewOptions.data.user_id = userID;
+					getMyReviewOptions.data.book_id = thisView.options.id;
+					console.log(getMyReviewOptions);
+					oauth.request(getMyReviewOptions);
+				}
+			};
+			
+			oauth.request(profileRequestOptions);
 		}
 
      });               
