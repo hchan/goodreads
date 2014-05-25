@@ -50,7 +50,6 @@ define
 					//url : "http://www.goodreads.com/api/auth_user?format=xml&key=kBalTLaEbuAf3GWqfN3nw&noop=noop",
 					url : "http://www.corsproxy.com/www.goodreads.com/api/auth_user",
 					//urlToSignForFunc : App.urlToSignForFunc,
-					//App.getURL("/api/auth_user?noop=noop"), // profile information
 					success : function(data) {
 						 var x2js = new X2JS();
 						 var jsonObj = x2js.xml2json($.parseXML(data.text));

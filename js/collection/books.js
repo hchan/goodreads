@@ -11,7 +11,7 @@ define(['backbone', 'model/book'], function(Backbone, book){
 
 	fetch : function (options, callback) {
 
-	    var url = App.getURL("/search.xml?q=" + options.q);
+	    var url = App.getURL("/search.xml") + "?q=" + options.q + "&format=xml&key=" + App.key;
 	    $.ajax({
 		url: url,
 		success: callback,

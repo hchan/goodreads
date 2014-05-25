@@ -4,9 +4,12 @@ var App = {
 	
 	oauthCallbackURL : "http://hchan.github.io/goodreads/authorizeOK.html",
 	
+	corsProxy : "http://cors-anywhere.herokuapp.com",
+	
     getURL : function(relativeURL) {
     	jQuery.ajaxSetup({ cache: true });
-    	return "http://www.corsproxy.com/www.goodreads.com" + relativeURL + "&format=xml&key=" + App.key;
+    	return App.corsProxy + "/www.goodreads.com" + relativeURL;
+		//  + "&format=xml&key=" + App.key;
     } ,
     
 	saveToken: function(key, secret) {
@@ -74,8 +77,12 @@ var App = {
 	
 	urlToSignForFunc : function(url) {
 		var retval = url;
-		retval = retval.replace("www.corsproxy.com/", "");
-		retval = retval.replace("cors-anywhere.herokuapp.com/", "");
+		//retval = retval.replace("www.corsproxy.com/", "");
+		//retval = retval.replace("cors-anywhere.herokuapp.com/", "");
+		var corsProxyHost = App.corsProxy;
+		corsProxyHost = corsProxyHost.replace("http://", "");
+		corsProxyHost = corsProxyHost.replace("https://", "");
+		retval = retval.replace(corsProxyHost + "/", ""); 
 		return retval;
 	}
 		

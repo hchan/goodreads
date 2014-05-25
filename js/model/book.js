@@ -9,7 +9,7 @@ define
 	},
 	fetch : function (options, callback) {
 
-	    var url = App.getURL("/book/show/" + options.id + "?noop=noop");
+	    var url = App.getURL("/book/show/") + options.id + "?format=xml&key=" + App.key;
 	    console.log(url);
 	    $.ajax({
 		url: url,

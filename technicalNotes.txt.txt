@@ -1,5 +1,6 @@
 - We are using CORS (Cross Origin Resource Sharing) to bypass the SOP (Single Origin Policy)
-- to be more exact, we are using a CORS Proxy (http://www.corsproxy.com)
+- to be more exact, I am using the following proxy: cors-anywhere.herokuapp.com - NodeJS, https://github.com/Rob--W/cors-anywhere/
+- note that http://www.corsproxy.com does NOT support POST
 -- my gut feel is that the corsproxy adds something along the lines to the HTML Header response
 	resp.setHeader("Access-Control-Allow-Credentials", "true");
 	resp.setHeader("Access-Control-Allow-Origin", "*"); // CORS
