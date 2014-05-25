@@ -10,7 +10,9 @@ using the GIVEN url.  If the GIVEN url is the proxyURL, this is wrong.  Therefor
 the REAL URL.  i.e. the the http request to the proxy, but sign with the nonProxy URL
 
 - In the OAuth1.0 spec (do a google with oauth diagram), there is an OOB (Out of Band) Authorization
-Basically this means that you will be "pop-up" with a URL that will ask then end user for permission.
-This pop-up URL should NOT be proxied (its a pop-up, so the SOP won't apply).  ONLY after you completed
-the pop-up authentication can you retrieve an Access Token.
+Basically this means that you will either have to use a frame/pop-up with a URL that will ask then end user for permission.
+This frame/pop-up should NOT be proxied.  ONLY after you completed
+the OOB authentication can you retrieve an Access Token.
 - This access token will then be stored in localStorage
+- this app will not work locally with IE
+- for chrome, you must use the --disable-web-security flag

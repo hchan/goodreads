@@ -35,20 +35,22 @@ define
 		},
 		
 		doAuthorizeOK : function(thisView, oauth) {
-			clearInterval(thisView.waitInterval);
-			var countDown = 10;
 			
-			var accessToken = oauth.getAccessToken();
-			console.log(accessToken);
-			App.saveToken(accessToken[0], accessToken[1]);
-			thisView.waitInterval = self.setInterval(function() {
-				$("#waitingText").html("Authentication OK.  Redirecting back home in " + countDown + "s");
-				countDown--;
-				if (countDown == -1) {
-					clearInterval(thisView.waitInterval);
-					window.location.href="#home";
-				}
-			}, 1000);
+			oauth.fetchAccessToken(function(data) {
+				var accessToken = oauth.getAccessToken();
+				console.log(accessToken);
+				App.saveToken(accessToken[0], accessToken[1]);
+				var countDown = 10;
+				clearInterval(thisView.waitInterval);
+				thisView.waitInterval = self.setInterval(function() {
+					$("#waitingText").html("Authentication OK.  Redirecting back home in " + countDown + "s");
+					countDown--;
+					if (countDown == -1) {
+						clearInterval(thisView.waitInterval);
+						window.location.href="#home";
+					}
+				}, 1000);
+			});
 		},
 		
 		
