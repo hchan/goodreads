@@ -147,5 +147,9 @@ body {
 	-webkit-transform:rotate(180deg);
 }
 
+#pollingText {
+	color: blue;
+	background-color : yellow
+}
 
 

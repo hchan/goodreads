@@ -1,20 +1,25 @@
 <p>
-A screen will popup (you might have to set your browser to Allow pop-ups) to ask for your permission to use the Goodreads WRITE API.
-Fill in the appropriate Goodreads credential in the pop-up
-Afterwards, the pop-up will redirect you to Google,
+The frame below will ask for your OAuth permission to use the Goodreads WRITE API.
+If you are not already signed in to Goodreads, then please do so in the frame below.
+Afterwards, that frame will redirect you to http://en.wikipedia.org/wiki/OAuth
 meaning that your token has been accepted.
-Finally click the Done button to store that token and you will also
-redirected back to this app's homepage
-<input type="button" id="done" value="Done"/>
+This top frame is currently polling the bottom frame to turn to : http://en.wikipedia.org/wiki/OAuth
+
+<div id="pollingText">Still polling...</div>
 </p>
 <hr/>
 <h2>Technical Mumble Smumble</h2>
 <div>
-This pop-up is known as the Authorize URL in OAuth1.0.
-Only after the authorize is complete will the Done button be able to fetch the access token.
-If you click the Done button before you finish filling in the pop-up, you won't be able to get the access token.
-This access token will then be stored in localStorage.
-Note that you are seeing a Google page as a callback.  I arbitrarily chose Google as the callback (a setting in
+This Out-Of-Band frame is known as the Authorize URL in OAuth1.0.
+Only after the authorization is complete will the fetchAccessToken API be available.
+After authorization is complete, this app will fetch the access token and store it in 
+<a href="http://diveintohtml5.info/storage.html">localStorage</a>
+
+I arbitrarily chose http://en.wikipedia.org/wiki/OAuth as the callback page(a setting in
 the Goodreads app settings).  If we had an intermediate server (well, besides CORSProxy), the callback will
 be this intermediate server and the action of the Done Button (fetchAccessToken) should be moved there.
 </div>
+<hr/>
+<iframe id="authorizationFrame" style="width: 100%; height: 500px">
+  <p>Your browser does not support iframes.</p>
+</iframe>
