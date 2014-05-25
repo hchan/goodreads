@@ -53,6 +53,8 @@ define
 
 			function receiveMessage(event)
 			{
+			console.log(event);
+				console.log(event.orgin);
 			  console.log("Wow, cross communication works");
 			}
 			
