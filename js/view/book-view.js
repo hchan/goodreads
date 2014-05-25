@@ -65,11 +65,12 @@ define
 					"review[review]" : $("#editReviewTextarea").val()
 				},
 				success : function(data) {
-					console.log($("#editReviewTextarea").val());
-					console.log(data.text);
-					var x2js = new X2JS();
-					var jsonObj = x2js.xml2json(data.text);
-					console.log(jsonObj);
+					//console.log($("#editReviewTextarea").val());
+					//console.log(data.text);
+					//var x2js = new X2JS();
+					//var jsonObj = x2js.xml2json(data.text);
+					//console.log(jsonObj);
+					viewThis.initialize();
 				},
 				failure : function(data) {
 					console.log("DOH");
@@ -91,12 +92,13 @@ define
 						"review[review]" : $("#reviewTextarea").val()
 					},
 					success : function(data) {
-						 var x2js = new X2JS();
-						 var jsonObj = x2js.xml2json($.parseXML(data.text));
-						 console.log(jsonObj);
-						 var profileInfoHtml = profileInfoTmpl(jsonObj);
+						// var x2js = new X2JS();
+						// var jsonObj = x2js.xml2json($.parseXML(data.text));
+						// console.log(jsonObj);
+						// var profileInfoHtml = profileInfoTmpl(jsonObj);
 
-						 $("#app").html(profileInfoHtml);			     
+						// $("#app").html(profileInfoHtml);			     
+						viewThis.initialize();
 					}
 				};
 			 
@@ -125,6 +127,7 @@ define
 					
 				},
 				failure : function(data) {
+					// 404 not found, therefore we create a review
 					$("#createReviewDiv").show();
 				}
 			}
