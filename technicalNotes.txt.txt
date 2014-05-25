@@ -1,0 +1,16 @@
+- We are using CORS (Cross Origin Resource Sharing) to bypass the SOP (Single Origin Policy)
+- to be more exact, we are using a CORS Proxy (http://www.corsproxy.com)
+-- my gut feel is that the corsproxy adds something along the lines to the HTML Header response
+	resp.setHeader("Access-Control-Allow-Credentials", "true");
+	resp.setHeader("Access-Control-Allow-Origin", "*"); // CORS
+	resp.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+	
+- OAuth1.0 with CORS gets a bit tricky.  Why?  Because OAuth will create a signature for each request
+using the GIVEN url.  If the GIVEN url is the proxyURL, this is wrong.  Therefore, we have to sign with
+the REAL URL.  i.e. the the http request to the proxy, but sign with the nonProxy URL
+
+- In the OAuth1.0 spec (do a google with oauth diagram), there is an OOB (Out of Band) Authorization
+Basically this means that you will be "pop-up" with a URL that will ask then end user for permission.
+This pop-up URL should NOT be proxied (its a pop-up, so the SOP won't apply).  ONLY after you completed
+the pop-up authentication can you retrieve an Access Token.
+- This access token will then be stored in localStorage
