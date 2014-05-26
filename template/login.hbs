@@ -7,7 +7,6 @@ This top frame is currently waiting for the bottom frame to turn to : <span clas
 
 <div id="waitingText">Still waiting...</div>
 </p>
-<hr/>
 <h2>Technical Mumble Smumble</h2>
 <div>
 This Out-Of-Band frame is known as the Authorize URL in OAuth1.0.
@@ -17,13 +16,14 @@ After authorization is complete, this app will fetch the access token and store 
 
 I arbitrarily chose <span class="callbackURL"/> as the callback page(a setting in
 the Goodreads app settings).  The callbackURL will do a javascript postMessage to let the
-parent know that it is loaded.  If the frame below doesn't seem to work properly, do the following:
+parent know that it is loaded.  If the frame below doesn't seem to work properly
+(i.e., it never takes you to <span class="callbackURL"/>), then do the following:
 <ol>
-<li>Open in new window: <span id="authorizationURL"/></li>
-<li>Fill in your credentials in the new window</li>
+<li>Open this link in a new window: <span id="authorizationURL"/></li>
+<li>Fill in your credentials in that new window</li>
 <li>Click <input type="button" id="done" value="Done"></li>
 </div>
 <hr/>
-<iframe id="authorizationFrame" style="width: 100%; height: 500px">
+<iframe id="authorizationFrame">
   <p>Your browser does not support iframes.</p>
 </iframe>
