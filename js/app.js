@@ -1,6 +1,6 @@
 var App = {
-    key : 'kBalTLaEbuAf3GWqfN3nw',
-    secret: 'zP2xpCd5Vu8aGpNw67U3PoYZOUf1QvzFPcEB8Bt3Fj0',
+    key : 'kBalTLaEbuAf3GWqfN3nw', // OAuth Consumer Key
+    secret: 'zP2xpCd5Vu8aGpNw67U3PoYZOUf1QvzFPcEB8Bt3Fj0', // // OAuth Consumer Secret
 	
 	oauthCallbackURL : "http://hchan.github.io/goodreads/authorizeOK.html",
 	
@@ -18,8 +18,9 @@ var App = {
 		//  + "&format=xml&key=" + App.key;
     } ,
     
+	// OAuth Access Token
 	saveToken: function(key, secret) {
-		localStorage["goodreads.key"] = key;
+		localStorage["goodreads.key"] = key; 
 		localStorage["goodreads.secret"] = secret;
 	},
 	
@@ -31,6 +32,7 @@ var App = {
 		return localStorage["goodreads.userID"];
 	},
 	
+	// OAuth Access Token
 	getToken : function() {
 		var token = {};
 		token['key'] = localStorage["goodreads.key"];
@@ -38,6 +40,7 @@ var App = {
 		return token;
 	},
 	
+	// OAuth Access Token
 	deleteToken : function() {
 		localStorage.removeItem("goodreads.key");
 		localStorage.removeItem("goodreads.secret");
@@ -65,6 +68,7 @@ var App = {
 			 * this urlToSignForFunc is a Henry Chan feature
 			 * Basically, because we are using a CORS proxy, our URL Signature will contain the CORS Proxy URL
 			 * This is bad ... so this function will create the OAuth signature STRIPPING OUT the CORS Proxy URL
+			 * and hence sign with the real endpoin
 			 */
 			 urlToSignForFunc : App.urlToSignForFunc
 

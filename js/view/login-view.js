@@ -96,8 +96,9 @@ define
 			
 			 oauth.fetchRequestToken(function(data) { // uses requestTokenUrl
 				
-				 console.log(data);
+				console.log(data);
 				var authorizationURL = data;
+				$("#authorizationURL").html(authorizationURL);
 				$("#authorizationFrame").attr('src',authorizationURL);
 				 //goodreadsOOBauthorizationWindow = window.open(data, '_goodreadsOOBhorization', "width=600, height=600"); // uses authorizationUrl
 				 
