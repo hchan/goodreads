@@ -88,7 +88,7 @@ define
 				//console.log(event.orgin);
 				//console.log("Wow, cross communication works");
 				thisView.postMessageCount++;
-				if (thisView.postMessageCount == 3) {
+				if (thisView.postMessageCount == 10) {
 					thisView.doAuthorizeOK(thisView, oauth);					
 				}
 			}
@@ -98,6 +98,7 @@ define
 				
 				console.log(data);
 				var authorizationURL = data;
+				
 				$("#authorizationURL").html(authorizationURL);
 				$("#authorizationFrame").attr('src',authorizationURL);
 				 //goodreadsOOBauthorizationWindow = window.open(data, '_goodreadsOOBhorization', "width=600, height=600"); // uses authorizationUrl
