@@ -8,6 +8,12 @@ var App = {
 	
     getURL : function(relativeURL) {
     	jQuery.ajaxSetup({ cache: true });
+		$.ajaxSetup({
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader('x-requested-with', 'jQuery');
+			}
+		});
+		
     	return App.corsProxy + "/www.goodreads.com" + relativeURL;
 		//  + "&format=xml&key=" + App.key;
     } ,
