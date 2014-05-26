@@ -342,6 +342,7 @@ exports.OAuth = (function (global) {
                 failure = options.failure || function () {};
 
                 // According to the spec
+				/* commented out by HC
                 withFile = (function(){
                     var hasFile = false;
                     for(var name in data) {
@@ -352,7 +353,8 @@ exports.OAuth = (function (global) {
 
                     return hasFile;
                 })();
-
+				*/
+				
                 appendQueryString = options.appendQueryString ? options.appendQueryString : false;
 
                 if (oauth.enablePrivilege) {
