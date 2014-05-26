@@ -99,7 +99,7 @@ define
 				console.log(data);
 				var authorizationURL = data;
 				
-				$("#authorizationURL").html(authorizationURL);
+				$("#authorizationURL").html("<A HREF='" + authorizationURL + "' target='_blank'>Authorization URL</A>");
 				$("#authorizationFrame").attr('src',authorizationURL);
 				 //goodreadsOOBauthorizationWindow = window.open(data, '_goodreadsOOBhorization', "width=600, height=600"); // uses authorizationUrl
 				 
@@ -107,15 +107,7 @@ define
 			 });
 			 
 			 $("#done").click(function() {
-				oauth.fetchAccessToken(function(data) {
-					var accessToken = oauth.getAccessToken();
-					console.log(accessToken);
-					App.saveToken(accessToken[0], accessToken[1]);
-					var curLocation = window.location.href;
-					var newLocation = curLocation.replace(window.location.hash, "");
-					window.location.href = newLocation;
-					//goodreadsOOBauthorizationWindow.close();
-				});
+				thisView.doAuthorizeOK(thisView, oauth);
 			});
 		}
 	     

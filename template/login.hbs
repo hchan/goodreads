@@ -17,9 +17,11 @@ After authorization is complete, this app will fetch the access token and store 
 
 I arbitrarily chose <span class="callbackURL"/> as the callback page(a setting in
 the Goodreads app settings).  The callbackURL will do a javascript postMessage to let the
-parent know that it is loaded.  If the frame below doesn't seem to work properly, use the 
-following URL in a new window and refresh this one.<br/>
-Authorization URL: <span id="authorizationURL"/>
+parent know that it is loaded.  If the frame below doesn't seem to work properly, do the following:
+<ol>
+<li>Open in new window: <span id="authorizationURL"/></li>
+<li>Fill in your credentials in the new window</li>
+<li>Click <input type="button" id="done" value="Done"></li>
 </div>
 <hr/>
 <iframe id="authorizationFrame" style="width: 100%; height: 500px">
